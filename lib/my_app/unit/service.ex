@@ -37,6 +37,10 @@ defmodule MyApp.Unit.Service do
     {:noreply, state}
   end
 
+  def handle_call(:get_state, _from, state) do
+    {:reply, state, state}
+  end
+
   def handle_cast({:result, {worker, result}}, state) do
 
     IO.puts "#{state.name}: Message from #{inspect(worker)}: #{result}"

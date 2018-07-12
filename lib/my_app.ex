@@ -14,7 +14,7 @@ defmodule MyApp do
   end
 
   def get_unit_state(name) do
-    :ok
+    UnitSupervisor.get_unit_state(name)
   end
 
   def remove_unit(name) do
