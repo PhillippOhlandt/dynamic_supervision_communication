@@ -20,7 +20,7 @@ defmodule MyApp.UnitSupervisor do
   def list_units() do
     info =
       DynamicSupervisor.which_children(__MODULE__)
-      |> Enum.map(fn {_, pid, _, _} -> pid  end)
+      |> Enum.map(fn {_, pid, _, _} -> pid end)
       |> Enum.map(&to_unit_info/1)
 
     {:ok, info}
