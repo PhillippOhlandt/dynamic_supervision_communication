@@ -9,8 +9,8 @@ defmodule MyApp do
     UnitSupervisor.add_unit(name)
   end
 
-  def list_units(name) do
-    :ok
+  def list_units() do
+    UnitSupervisor.list_units()
   end
 
   def get_unit_state(name) do
