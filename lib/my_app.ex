@@ -18,6 +18,6 @@ defmodule MyApp do
   end
 
   def remove_unit(name) do
-    :ok
+    UnitSupervisor.remove_unit(name)
   end
 end

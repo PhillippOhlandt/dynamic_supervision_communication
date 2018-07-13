@@ -36,14 +36,28 @@ defmodule MyApp.UnitSupervisor do
   end
 
   def get_unit_state(name) do
-    case get_unit_pid(name) do
+    case get_unit_service_pid(name) do
       {:error, :not_found} -> {:error, :not_found}
       {:ok, pid} ->
         {:ok, GenServer.call(pid, :get_state)}
     end
   end
 
-  defp get_unit_pid(name) do
+  def remove_unit(name) do
+    case get_unit_pid(name) do
+      {:error, :not_found} -> {:error, :not_found}
+      {:ok, pid} -> DynamicSupervisor.terminate_child(__MODULE__, pid)
+    end
+  end
+
+  def get_unit_pid(name) do
+    case Registry.lookup(MyApp.Registry, {:unit, name}) do
+      [{pid, _}] -> {:ok, pid}
+      _ -> {:error, :not_found}
+    end
+  end
+
+  def get_unit_service_pid(name) do
     case Registry.lookup(MyApp.Registry, {:unit, name, :service}) do
       [{pid, _}] -> {:ok, pid}
       _ -> {:error, :not_found}
